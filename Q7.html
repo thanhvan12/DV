@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Q7 | Xác suất bán hàng theo Nhóm hàng</title>
+  <script src="../js/d3.v7.min.js"></script>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    h2{margin:14px 0;text-align:center;color:#2b6cb0}
+
+    /* Tooltip */
+    .tooltip{
+      position:fixed;
+      pointer-events:none;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:10px 12px;
+      box-shadow:0 6px 20px rgba(0,0,0,.08);
+      font-size:12px;
+      color:#111827;
+      opacity:0;
+      transition:opacity .12s ease;
+      z-index:9999;
+      max-width:280px;
+      line-height:1.35;
+    }
+    .tooltip b{color:#374151}
+    .tooltip .v{color:#111827}
+    .tooltip .sub{color:#6b7280}
+  </style>
+</head>
+<body>
+  <h2>Xác suất bán hàng theo Nhóm hàng</h2>
+  <div id="chart"></div>
+
+  <!-- Tooltip div -->
+  <div id="tt" class="tooltip"></div>
+
+  <script src="../js/Q7.js" defer></script>
+</body>
+</html>
