@@ -1,5 +1,5 @@
 // js/Q1.js — Q1: Doanh số bán hàng theo Mặt hàng
-const CSV_PATH = "../data/data_ggsheet_data.csv";
+const CSV_PATH = "data/data_ggsheet_data.csv";
 const TOP_N = 20;
 const toNumber = v => +String(v ?? "").replace(/[^\d.-]/g, "");
 const fmtVNDTrieu = v => d3.format(",.0f")(v / 1e6) + " triệu VND";
@@ -181,3 +181,4 @@ legend.insert("rect", ":first-child")
   .attr("rx", 6)
   .attr("opacity", 0.98);
 })();
+
