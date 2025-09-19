@@ -48,7 +48,7 @@
     const TOTAL = 12;          // Q1..Q12
     const PREFIX = "Q";        // file names are Q1.html..Q12.html
     const EXT = ".html";       // extension
-    const PATH = "";           // '' if index.html nằm cùng thư mục Q*.html; 'chart/' nếu index nằm bên ngoài
+    const PATH = "chart/";     // vì Q*.html nằm trong thư mục chart/
 
     const nav = document.getElementById("nav");
     const viewer = document.getElementById("viewer");
@@ -78,11 +78,9 @@
       viewer.src = src;
       setActive(i);
       if (pushHash) history.replaceState(null, "", "#Q" + i);
-      // lưu “lần xem gần nhất”
-      localStorage.setItem("lastQ", i);
+      localStorage.setItem("lastQ", i); // lưu lần xem gần nhất
     }
 
-    // hash routing: #Q7 -> mở Q7
     function initFromHash(){
       const h = (location.hash || "").toUpperCase();
       const m = h.match(/^#Q(\d{1,2})$/);
@@ -91,7 +89,7 @@
       return Math.min(TOTAL, Math.max(1, saved));
     }
 
-    // keyboard: ←/→ để chuyển Q
+    // keyboard ←/→
     window.addEventListener("keydown", (e) => {
       const cur = +localStorage.getItem("lastQ") || 1;
       if (e.key === "ArrowRight") loadQ(Math.min(TOTAL, cur + 1), true);
