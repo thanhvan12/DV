@@ -8,17 +8,24 @@
     :root{ --bg:#0f172a; --btn:#1f2937; --btnA:#2563eb; --txt:#e5e7eb; }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#f6f7fb}
-    header{position:sticky;top:0;z-index:10;background:var(--bg);padding:10px 12px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+    header{
+      position:sticky;top:0;z-index:10;background:var(--bg);
+      padding:10px 12px;box-shadow:0 2px 8px rgba(0,0,0,.15)
+    }
     .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:1200px;margin:auto}
     .title{color:#93c5fd;font-weight:700;margin-right:8px}
-    button.q{appearance:none;border:0;border-radius:8px;padding:8px 12px;cursor:pointer;
-      background:var(--btn);color:var(--txt);font-weight:600;letter-spacing:.2px}
+    button.q{
+      appearance:none;border:0;border-radius:8px;padding:8px 12px;cursor:pointer;
+      background:var(--btn);color:var(--txt);font-weight:600;letter-spacing:.2px
+    }
     button.q.active{background:var(--btnA)}
     .spacer{flex:1}
     a.open{color:#a7f3d0;text-decoration:none;font-size:13px}
     main{max-width:1200px;margin:12px auto;padding:0 12px}
-    iframe{width:100%;height:78vh;min-height:560px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    iframe{
+      width:100%;height:78vh;min-height:560px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.06)
+    }
     @media (max-width:640px){ iframe{ height:80vh } }
   </style>
 </head>
@@ -26,7 +33,7 @@
   <header>
     <div class="bar" id="nav">
       <div class="title">Descriptive Statistics – Q1→Q12</div>
-      <!-- buttons will be injected by JS -->
+      <!-- buttons are injected by JS -->
       <div class="spacer"></div>
       <a id="openLink" class="open" target="_blank" rel="noopener">Mở trang đang xem</a>
     </div>
@@ -37,17 +44,17 @@
   </main>
 
   <script>
-    // ====== CONFIG ======
+    // === Settings ===
     const TOTAL = 12;          // Q1..Q12
-    const PREFIX = "Q";        // file names: Q1.html..Q12.html
-    const EXT = ".html";
-    const PATH = "css/";       // <-- Q*.html nằm trong thư mục css/
+    const PREFIX = "Q";        // file names are Q1.html..Q12.html
+    const EXT = ".html";       // extension
+    const PATH = "";           // '' if index.html nằm cùng thư mục Q*.html; 'chart/' nếu index nằm bên ngoài
 
     const nav = document.getElementById("nav");
     const viewer = document.getElementById("viewer");
     const openLink = document.getElementById("openLink");
 
-    // Build nav buttons
+    // build buttons
     const btns = [];
     for (let i = 1; i <= TOTAL; i++) {
       const b = document.createElement("button");
@@ -59,8 +66,7 @@
       btns.push(b);
     }
 
-    const fileFor = (i) => PATH + PREFIX + i + EXT;
-
+    function fileFor(i) { return PATH + PREFIX + i + EXT; }
     function setActive(i){
       btns.forEach(b => b.classList.toggle("active", +b.dataset.q === +i));
       openLink.href = fileFor(i);
@@ -72,33 +78,32 @@
       viewer.src = src;
       setActive(i);
       if (pushHash) history.replaceState(null, "", "#Q" + i);
+      // lưu “lần xem gần nhất”
       localStorage.setItem("lastQ", i);
     }
 
-    function pickInitial(){
+    // hash routing: #Q7 -> mở Q7
+    function initFromHash(){
       const h = (location.hash || "").toUpperCase();
       const m = h.match(/^#Q(\d{1,2})$/);
-      if (m) return clamp(+m[1], 1, TOTAL);
-      return clamp(+localStorage.getItem("lastQ") || 1, 1, TOTAL);
+      if (m) return Math.min(TOTAL, Math.max(1, +m[1]));
+      const saved = +localStorage.getItem("lastQ") || 1;
+      return Math.min(TOTAL, Math.max(1, saved));
     }
 
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-
-    // keyboard: ←/→
-    window.addEventListener("keydown", e => {
+    // keyboard: ←/→ để chuyển Q
+    window.addEventListener("keydown", (e) => {
       const cur = +localStorage.getItem("lastQ") || 1;
-      if (e.key === "ArrowRight") loadQ(clamp(cur + 1, 1, TOTAL), true);
-      if (e.key === "ArrowLeft")  loadQ(clamp(cur - 1, 1, TOTAL), true);
-    });
-
-    // hash change (back/forward)
-    window.addEventListener("hashchange", () => {
-      const i = pickInitial();
-      loadQ(i, false);
+      if (e.key === "ArrowRight") loadQ(Math.min(TOTAL, cur + 1), true);
+      if (e.key === "ArrowLeft")  loadQ(Math.max(1, cur - 1), true);
     });
 
     // init
-    loadQ(pickInitial(), false);
+    loadQ(initFromHash(), false);
+    window.addEventListener("hashchange", () => {
+      const i = initFromHash();
+      if (!isNaN(i)) loadQ(i, false);
+    });
   </script>
 </body>
 </html>
