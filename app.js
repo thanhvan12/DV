@@ -18,7 +18,6 @@ const TITLES = {
 
 const chart = d3.select("#chart");
 const tip = d3.select("#tt");
-const titleEl = d3.select("#chartTitle");
 
 function ensureTitle(){
   let h = document.getElementById("chartTitle");
@@ -74,6 +73,7 @@ function initQFromHash() {
 /* ====== ROUTER ====== */
 async function showQ(i, pushHash = false) {
   setActive(i);
+  ensureTitle();   
   setTitle(i);
   if (pushHash) history.replaceState(null, "", "#Q" + i);
   localStorage.setItem("lastQ", i);
