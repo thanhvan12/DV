@@ -20,14 +20,21 @@ const chart = d3.select("#chart");
 const tip = d3.select("#tt");
 const titleEl = d3.select("#chartTitle");
 
+function ensureTitle(){
+  let h = document.getElementById("chartTitle");
+  if (!h) {
+    h = document.createElement("h2");
+    h.id = "chartTitle";
+    h.className = "chart-title";
+    document.getElementById("chart").prepend(h);
+  }
+}
+
 function setTitle(i) {
-  const raw = TITLES[i] || `Q${i}`;
-  // bỏ tiền tố "Q<number> – " hoặc "Q<number> - " nếu có
-  const t = raw.replace(/^Q\d+\s*[–-]\s*/,'').trim();
+  const t = TITLES[i] || "";
   d3.select("#chartTitle").text(t);
   document.title = `${t} • Dashboard`;
 }
-
 // CSV cache
 let _rowsCache = null;
 async function loadCSV() {
