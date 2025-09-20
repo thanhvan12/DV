@@ -2,18 +2,18 @@ const CSV_FILE = "data_ggsheet_data.csv";
 const TOTAL = 12;
 
 const TITLES = {
-  1: "Q1 – Doanh số theo Mặt hàng",
-  2: "Q2 – Doanh số theo Nhóm hàng",
-  3: "Q3 – Doanh số theo Tháng",
-  4: "Q4 – Doanh số TB theo Ngày trong tuần",
-  5: "Q5 – Doanh số TB theo Ngày trong tháng",
-  6: "Q6 – Doanh số TB theo Khung giờ",
-  7: "Q7 – Xác suất bán hàng theo Nhóm hàng",
-  8: "Q8 – Xác suất bán hàng của Nhóm hàng theo Tháng",
-  9: "Q9 – Xác suất bán hàng của Mặt hàng theo Nhóm hàng",
-  10: "Q10 – Xác suất bán hàng theo Nhóm hàng & Tháng",
-  11: "Q11 – Phân phối Lượt mua hàng",
-  12: "Q12 – Phân phối Mức chi trả của Khách hàng",
+  1: "Doanh số theo Mặt hàng",
+  2: "Doanh số theo Nhóm hàng",
+  3: "Doanh số theo Tháng",
+  4: "Doanh số TB theo Ngày trong tuần",
+  5: "Doanh số TB theo Ngày trong tháng",
+  6: "Doanh số TB theo Khung giờ",
+  7: "Xác suất bán hàng theo Nhóm hàng",
+  8: "Xác suất bán hàng của Nhóm hàng theo Tháng",
+  9: "Xác suất bán hàng của Mặt hàng theo Nhóm hàng",
+  10: "Xác suất bán hàng theo Nhóm hàng & Tháng",
+  11: "Phân phối Lượt mua hàng",
+  12: "Phân phối Mức chi trả của Khách hàng",
 };
 
 const chart = d3.select("#chart");
