@@ -56,7 +56,13 @@ h2.chart-title{
 @media (min-width:768px){
   h2.chart-title{ font-size:20px }
 }
-
+.chart-title{
+  margin:12px 12px 6px;
+  text-align:center;
+  color:#2b6cb0;
+  font-weight:700;
+  font-size:18px;
+}
 /* Tooltip dùng chung */
 .tooltip{
   position:fixed; pointer-events:none;
