@@ -1,4 +1,3 @@
-/* ====== CONFIG / UTILS ====== */
 const CSV_FILE = "data_ggsheet_data.csv";
 const TOTAL = 12;
 
@@ -16,33 +15,10 @@ const TITLES = {
   11: "Q11 – Phân phối Lượt mua hàng",
   12: "Q12 – Phân phối Mức chi trả của Khách hàng",
 };
-function ensureTitle(i){
-  // tạo h2 nếu chưa có
-  let h = document.getElementById("chartTitle");
-  if (!h) {
-    h = document.createElement("h2");
-    h.id = "chartTitle";
-    h.className = "chart-title";
-    // chèn lên đầu #chart
-    document.getElementById("chart").prepend(h);
-  }
-  const t = TITLES[i] || `Q${i}`;
-  h.textContent = t;
-  document.title = `${t} • Dashboard Q1–Q12`;
-}
+
 const chart = d3.select("#chart");
 const tip = d3.select("#tt");
-
-// Tạo tiêu đề nếu chưa có
-let titleEl = d3.select("#chartTitle");
-if (titleEl.empty()) {
-  titleEl = chart.insert("h2", ":first-child")
-    .attr("id", "chartTitle")
-    .attr("class", "chart-title")
-    .style("margin", "12px 12px 6px")
-    .style("textAlign", "center")
-    .style("color", "#2b6cb0");
-}
+const titleEl = d3.select("#chartTitle");
 
 function setTitle(i) {
   const t = TITLES[i] || `Q${i}`;
@@ -60,7 +36,6 @@ async function loadCSV() {
   return _rowsCache;
 }
 
-// helpers chung
 const toNumber = v => +String(v ?? "").replace(/[^\d.-]/g, "");
 const fmtInt = v => d3.format(",.0f")(v);
 
@@ -90,12 +65,11 @@ function initQFromHash() {
 /* ====== ROUTER ====== */
 async function showQ(i, pushHash = false) {
   setActive(i);
-  ensureTitle(i); 
   setTitle(i);
   if (pushHash) history.replaceState(null, "", "#Q" + i);
   localStorage.setItem("lastQ", i);
 
-  // xoá nội dung cũ (trừ h2)
+  // xoá nội dung cũ (trừ tiêu đề)
   chart.selectAll("svg, .gridwrap, .subplot, .note").remove();
 
   const rows = await loadCSV();
@@ -118,7 +92,7 @@ window.addEventListener("hashchange", () => showQ(initQFromHash(), false));
 window.addEventListener("keydown", (e) => {
   const cur = +localStorage.getItem("lastQ") || 1;
   if (e.key === "ArrowRight") showQ(Math.min(TOTAL, cur + 1), true);
-  if (e.key === "ArrowLeft") showQ(Math.max(1, cur - 1), true);
+  if (e.key === "ArrowLeft")  showQ(Math.max(1, cur - 1), true);
 });
 
 // Khởi động
