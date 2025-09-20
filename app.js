@@ -16,7 +16,20 @@ const TITLES = {
   11: "Q11 – Phân phối Lượt mua hàng",
   12: "Q12 – Phân phối Mức chi trả của Khách hàng",
 };
-
+function ensureTitle(i){
+  // tạo h2 nếu chưa có
+  let h = document.getElementById("chartTitle");
+  if (!h) {
+    h = document.createElement("h2");
+    h.id = "chartTitle";
+    h.className = "chart-title";
+    // chèn lên đầu #chart
+    document.getElementById("chart").prepend(h);
+  }
+  const t = TITLES[i] || `Q${i}`;
+  h.textContent = t;
+  document.title = `${t} • Dashboard Q1–Q12`;
+}
 const chart = d3.select("#chart");
 const tip = d3.select("#tt");
 
@@ -77,6 +90,7 @@ function initQFromHash() {
 /* ====== ROUTER ====== */
 async function showQ(i, pushHash = false) {
   setActive(i);
+  ensureTitle(i); 
   setTitle(i);
   if (pushHash) history.replaceState(null, "", "#Q" + i);
   localStorage.setItem("lastQ", i);
