@@ -21,9 +21,11 @@ const tip = d3.select("#tt");
 const titleEl = d3.select("#chartTitle");
 
 function setTitle(i) {
-  const t = TITLES[i] || `Q${i}`;
-  titleEl.text(t);
-  document.title = `${t} • Dashboard Q1–Q12`;
+  const raw = TITLES[i] || `Q${i}`;
+  // bỏ tiền tố "Q<number> – " hoặc "Q<number> - " nếu có
+  const t = raw.replace(/^Q\d+\s*[–-]\s*/,'').trim();
+  d3.select("#chartTitle").text(t);
+  document.title = `${t} • Dashboard`;
 }
 
 // CSV cache
