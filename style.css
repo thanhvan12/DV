@@ -48,21 +48,15 @@ main{ max-width:var(--content-max); margin:12px auto; padding:0 12px }
   min-height:540px; box-shadow:0 2px 10px var(--shadow); padding:8px 10px;
 }
 
-/* Tiêu đề mỗi biểu đồ (được chèn bằng JS) */
+/* Tiêu đề mỗi biểu đồ */
 h2.chart-title{
-  margin:14px 0 10px; text-align:center; color:var(--title);
-  font-size:18px; font-weight:700;
-}
-@media (min-width:768px){
-  h2.chart-title{ font-size:20px }
-}
-.chart-title{
-  margin:12px 12px 6px;
+  margin:14px 0 10px;
   text-align:center;
-  color:#2b6cb0;
+  color:var(--title);
+  font-size:20px;
   font-weight:700;
-  font-size:18px;
 }
+
 /* Tooltip dùng chung */
 .tooltip{
   position:fixed; pointer-events:none;
